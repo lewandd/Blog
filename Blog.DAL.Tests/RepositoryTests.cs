@@ -21,6 +21,14 @@ namespace Blog.DAL.Tests
             var context = new BlogContext();
             context.Database.CreateIfNotExists();
             var repository = new BlogRepository();
+            // add
+            context.Posts.ToList().ForEach(x => context.Posts.Remove(x));
+            context.Posts.Add(new Post
+            {
+                Author = "test",
+                Content = "test, test, test..."
+            });
+            context.SaveChanges();
             // act
             var result = repository.GetAllPosts();
             // assert
